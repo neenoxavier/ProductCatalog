@@ -19,7 +19,7 @@ namespace ProductCatalog.Controllers
 	{
 		private readonly IProductRepository _productRepository;
 		private readonly IHostingEnvironment _hostingEnvironment;
-		const string imageRepository = "\\ClientApp\\src\\assets\\Images";
+		const string imageRepository = "\\ClientApp\\dist\\assets\\Images";
 
 		public ProductController(IProductRepository productRepository, IHostingEnvironment hostingEnvironment)
 		{
