@@ -92,7 +92,7 @@ namespace ProductCatalog.Controllers
 		public void Delete(int id)
 		{
 			Product product = _productRepository.Get(id);
-			string filePath = Path.Combine(_hostingEnvironment.WebRootPath + imageRepository  + product.Photo);
+			string filePath = Path.Combine(_hostingEnvironment.ContentRootPath + imageRepository  + product.Photo);
 			_productRepository.Delete(product);
 			FileInfo file = new FileInfo(filePath);
 			if (file.Exists)
@@ -107,7 +107,7 @@ namespace ProductCatalog.Controllers
 		[Route("ExportProduct")]
 		public async Task<IActionResult> ExportProduct()
 		{
-			string rootFolder = _hostingEnvironment.WebRootPath;
+			string rootFolder = _hostingEnvironment.ContentRootPath;
 			string fileName = @"ProductCatalog_V" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".xlsx";
 
 			FileInfo file = new FileInfo(Path.Combine(rootFolder, fileName));
@@ -161,7 +161,7 @@ namespace ProductCatalog.Controllers
 			try
 			{
 				var file = Request.Form.Files[0];
-				string newPath = Path.Combine(_hostingEnvironment.WebRootPath + imageRepository);
+				string newPath = Path.Combine(_hostingEnvironment.ContentRootPath + imageRepository);
 				if (!Directory.Exists(newPath))
 				{
 					Directory.CreateDirectory(newPath);
