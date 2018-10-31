@@ -1,0 +1,39 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <h1><span *ngIf="isEdit">Edit</span><span *ngIf="!isEdit">Add</span> Product</h1>
+    </div>
+  </div>
+  <br /><br />
+  <div class="row">
+    <div class="col-sm-4">
+      <form>
+        <fieldset>
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" required  class="form-control" name="name" [(ngModel)]="productItem.name">
+          </div>
+
+          <div class="form-group">
+            <label>Price</label>
+            <div class="input-group">
+              <input type="number" required="required" class="form-control" name="price" [(ngModel)]="productItem.price">
+              <span class="input-group-addon" id="basic-addon2">Euro</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Photo</label>
+            <div class="input-group">
+              <input #photoInput type="file" class="form-control-file"  accept="image/*" />
+            </div>
+          </div>
+        </fieldset>
+        <button  type="submit" class="btn btn-primary  col-md-4 col-md-offset-8" (click)="UpdateProduct()">
+          <span *ngIf="isEdit">Update</span><span *ngIf="!isEdit">Add</span>
+        </button>
+        <span style="color: green;size: 10px">{{progress}}</span>
+      </form>
+    </div>
+  </div>
+</div>
