@@ -30,6 +30,7 @@ namespace ProductCatalog
 				);
 			// Bind Repositories
 			services.AddTransient<IProductRepository, ProductRepository>();
+			services.AddSingleton<IConfiguration>(Configuration);
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

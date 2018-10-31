@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Moq;
 using ProductCatalog.Controllers;
 using ProductCatalog.Data.Interfaces;
@@ -14,6 +15,7 @@ namespace ProductCatalogTests
 	{
 		private Mock<IProductRepository> _productRepository;
 		private Mock<IHostingEnvironment> _hostingRepository;
+		private Mock<IConfiguration> _configuration;
 		private ProductController _productController;
 		private List<Product> productList;
 
@@ -21,7 +23,8 @@ namespace ProductCatalogTests
 		{
 			_productRepository = new Mock<IProductRepository>();
 			_hostingRepository = new Mock<IHostingEnvironment>();
-			_productController = new ProductController(_productRepository.Object, _hostingRepository.Object);
+			_configuration = new Mock<IConfiguration>();
+			_productController = new ProductController(_productRepository.Object, _hostingRepository.Object,_configuration.Object);
 		}
 
 		[Fact]

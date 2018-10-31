@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using OfficeOpenXml;
 using ProductCatalog.Data.Interfaces;
 using ProductCatalog.Data.Models;
@@ -18,12 +19,14 @@ namespace ProductCatalog.Controllers
 	{
 		private readonly IProductRepository _productRepository;
 		private readonly IHostingEnvironment _hostingEnvironment;
-		const string imageRepository = "\\ClientApp\\dist\\assets\\Images\\";
+		private readonly IConfiguration _configuration;
 
-		public ProductController(IProductRepository productRepository, IHostingEnvironment hostingEnvironment)
+		public ProductController(IProductRepository productRepository, IHostingEnvironment hostingEnvironment, IConfiguration configuration)
 		{
 			_productRepository = productRepository;
 			_hostingEnvironment = hostingEnvironment;
+			_configuration = configuration;
+			
 		}
 
 		/// <summary>
@@ -91,7 +94,7 @@ namespace ProductCatalog.Controllers
 		public void Delete(int id)
 		{
 			Product product = _productRepository.Get(id);
-			string filePath = Path.Combine(_hostingEnvironment.ContentRootPath + imageRepository  + product.Photo);
+			string filePath = Path.Combine(_hostingEnvironment.ContentRootPath + _configuration["ImageRepository"]  + product.Photo);
 			_productRepository.Delete(product);
 			FileInfo file = new FileInfo(filePath);
 			if (file.Exists)
@@ -158,7 +161,7 @@ namespace ProductCatalog.Controllers
 			try
 			{
 				var file = Request.Form.Files[0];
-				string newPath = Path.Combine(_hostingEnvironment.ContentRootPath + imageRepository);
+				string newPath = Path.Combine(_hostingEnvironment.ContentRootPath + _configuration["ImageRepository"]);
 				if (!Directory.Exists(newPath))
 				{
 					Directory.CreateDirectory(newPath);
