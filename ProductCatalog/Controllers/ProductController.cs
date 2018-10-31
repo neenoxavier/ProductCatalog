@@ -19,7 +19,7 @@ namespace ProductCatalog.Controllers
 	{
 		private readonly IProductRepository _productRepository;
 		private readonly IHostingEnvironment _hostingEnvironment;
-		const string imageRepository = "\\ClientApp\\dist\\assets\\Images";
+		const string imageRepository = "\\ClientApp\\dist\\assets\\Images\\";
 
 		public ProductController(IProductRepository productRepository, IHostingEnvironment hostingEnvironment)
 		{
@@ -92,8 +92,7 @@ namespace ProductCatalog.Controllers
 		public void Delete(int id)
 		{
 			Product product = _productRepository.Get(id);
-			string filePath = Path.Combine(_hostingEnvironment.WebRootPath.Substring(0, _hostingEnvironment.WebRootPath.LastIndexOf('\\'))
-				+ imageRepository + '\\' + product.Photo);
+			string filePath = Path.Combine(_hostingEnvironment.WebRootPath + imageRepository  + product.Photo);
 			_productRepository.Delete(product);
 			FileInfo file = new FileInfo(filePath);
 			if (file.Exists)
@@ -162,7 +161,7 @@ namespace ProductCatalog.Controllers
 			try
 			{
 				var file = Request.Form.Files[0];
-				string newPath = Path.Combine(_hostingEnvironment.WebRootPath.Substring(0, _hostingEnvironment.WebRootPath.LastIndexOf('\\')) + imageRepository);
+				string newPath = Path.Combine(_hostingEnvironment.WebRootPath + imageRepository);
 				if (!Directory.Exists(newPath))
 				{
 					Directory.CreateDirectory(newPath);
