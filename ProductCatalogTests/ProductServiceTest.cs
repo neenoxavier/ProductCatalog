@@ -1,43 +1,65 @@
-﻿using ProductCatalog.Data.Interfaces;
+﻿using Microsoft.AspNetCore.Hosting;
+using Moq;
+using ProductCatalog.Controllers;
+using ProductCatalog.Data.Interfaces;
 using ProductCatalog.Data.Models;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Xunit;
 
 namespace ProductCatalogTests
 {
 	public class ProductServiceTest
 	{
-		private readonly IProductRepository _productRepository;
+		private Mock<IProductRepository> _productRepository;
+		private Mock<IHostingEnvironment> _hostingRepository;
+		private ProductController _productController;
+		private List<Product> productList;
 
-		public ProductServiceTest(IProductRepository productRepository)
+		public ProductServiceTest()
 		{
-			_productRepository = productRepository;
+			_productRepository = new Mock<IProductRepository>();
+			_hostingRepository = new Mock<IHostingEnvironment>();
+			_productController = new ProductController(_productRepository.Object, _hostingRepository.Object);
 		}
 
 		[Fact]
 		public void TestGet() {
-			var productItems=_productRepository.GetAll();
-			Assert.NotEmpty(productItems);
+			_productRepository.Setup(x => x.GetAll()).Returns(GetProductList());
+			var list=_productController.Get();
+			Assert.NotEmpty(list);
 		}
 		[Fact]
 		public void TestGetById()
 		{
-			var productItem = _productRepository.Get(1);
-			Assert.NotNull(productItem);
+			_productRepository.Setup(x => x.Get(1)).Returns(GetProduct);
+			var item = _productController.Get(1);
+			Assert.NotNull(item);
 		}
-		[Fact]
-		public void TestSearch()
-		{
-			var productItems = _productRepository.Search(item=>item.Name.ToUpper().Contains("A"));
-			Assert.NotEmpty(productItems);
+
+		public List<Product> GetProductList() {
+			productList = new List<Product>();
+			productList.Add(new Product
+			{
+				Id = 1,
+				Name = "Test1",
+				Photo = "Test.jpg",
+				Price = 100,
+				LastUpdated = DateTime.Now
+			});
+			return productList;
 		}
-		[Fact]
-		public void TestUpdate()
-		{
-			Product product = new Product();
-			product.Name = "Test";
-			var productId =(_productRepository.Add(product));
-			Assert.NotNull(productId);
+
+		public Product GetProduct() {
+			return new Product
+			{
+				Id = 1,
+				Name = "Test1",
+				Photo = "Test.jpg",
+				Price = 100,
+				LastUpdated = DateTime.Now
+			};
 		}
 	}
 }

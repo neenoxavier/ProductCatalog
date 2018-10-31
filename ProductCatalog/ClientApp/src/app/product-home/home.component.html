@@ -1,4 +1,3 @@
-
 <div class="container">
   <div class="row">
     <div class="col-md-4">
@@ -13,16 +12,17 @@
       </form>
     </div>
   </div>
-  <br><br>
+  <br><br><br><br>
+
   <div class="row" >
     <div class="col-sm-4" *ngFor="let product of productBlocks">
       <div class="card" style="margin-bottom: 10px">
         <div class="card-block" style="text-align: center">
-          <h3 class="card-title">{{product.name}}</h3>
           <div style="height: 120px">
-              <img src="assets/Images/{{product.photo}}" style="max-width: 90%;max-height: 90%" class="img-circle" />
+              <img src="assets/Images/{{product.photo}}" style="max-width: 90%;max-height: 90%" class=".img-rounded" />
           </div>
           <br>
+          <h3 class="card-title">{{product.name}}</h3>
           <p class="card-text">
             Price : {{product.price}} Euros <br />
             Last Updated on {{product.lastUpdated | date:'medium'}}

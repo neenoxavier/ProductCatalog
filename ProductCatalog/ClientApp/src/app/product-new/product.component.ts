@@ -22,17 +22,17 @@ export class ProductComponent {
     this.apiUrl = baseUrl + 'api/Product/';
     this.headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     if (this.productId)
-      this.GetProductDetails();
+      this.getProductDetails();
     
   }
-  GetProductDetails() {
+  getProductDetails() {
       this.isEdit = true;
       this.http.get<Product>(this.apiUrl + this.productId).subscribe(result => {
         this.productItem = result;
       }, error => console.error(error));
   }
 
-  UpdateProduct() {
+  updateProduct() {
     let files=this.photoInput.nativeElement.files;
     if(this.productItem.name.length<2){
       alert("Product name should have more than 2 characters");
@@ -46,20 +46,20 @@ export class ProductComponent {
       this.http.put(this.apiUrl, this.productItem, { headers: this.headers })
         .subscribe(
           success=>{
-            this.UploadPhoto(files,this.productItem.id);
+            this.uploadPhoto(files,this.productItem.id);
           },
           error => console.error(error)
           );
     else
       this.http.post(this.apiUrl, this.productItem, { headers: this.headers })
       .subscribe((result:any)=>{
-          this.UploadPhoto(files,result);
+          this.uploadPhoto(files,result);
         },
         error => console.error(error)
         );
   }
 
-  UploadPhoto(files,productId){
+  uploadPhoto(files,productId){
       if(files && files.length>0){
         let file=files[0];
         let data=new FormData();
@@ -79,5 +79,8 @@ export class ProductComponent {
         alert("Product Updated Successfully");
         this.router.navigate(['']);
       }
+  }
+  cancelUpdate(){
+    this.router.navigate(['']);
   }
 }

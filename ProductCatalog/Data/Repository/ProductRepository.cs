@@ -1,13 +1,9 @@
 ﻿using ProductCatalog.Data.Interfaces;
 using ProductCatalog.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ProductCatalog.Data.Repository
 {
-    public class ProductRepository : Repository<Product>,IProductRepository
+	public class ProductRepository : Repository<Product>,IProductRepository
     {
 		private readonly ProductDBContext _productDBContext;
 
@@ -15,9 +11,7 @@ namespace ProductCatalog.Data.Repository
         {
 			_productDBContext = productDBContext;
 		}
-        public Product GetProductCatalog()
-        {
-            throw new NotImplementedException();
-        }
+        
+		// Add Product specific functionalities
     }
 }

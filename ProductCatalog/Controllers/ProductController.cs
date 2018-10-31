@@ -1,15 +1,14 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
+using ProductCatalog.Data.Interfaces;
+using ProductCatalog.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using OfficeOpenXml;
-using ProductCatalog.Data.Interfaces;
-using ProductCatalog.Data.Models;
 
 namespace ProductCatalog.Controllers
 {
@@ -115,11 +114,8 @@ namespace ProductCatalog.Controllers
 
 			using (ExcelPackage package = new ExcelPackage(file))
 			{
-
 				IList<Product> productList = _productRepository.GetAll().ToList();
-
 				ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Products");
-				int totalRows = productList.Count();
 
 				worksheet.Cells[1, 1].Value = "Id";
 				worksheet.Cells[1, 2].Value = "Product Name";
@@ -127,7 +123,8 @@ namespace ProductCatalog.Controllers
 				worksheet.Cells[1, 4].Value = "Last Updated";
 
 				int i = 0;
-				for (int row = 2; row <= totalRows + 1; row++)
+				int rowCount = productList.Count();
+				for (int row = 2; row <= rowCount + 1; row++)
 				{
 					worksheet.Cells[row, 1].Value = productList[i].Id;
 					worksheet.Cells[row, 2].Value = productList[i].Name;
