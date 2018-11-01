@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using OfficeOpenXml;
 using ProductCatalog.Data.Interfaces;
 using ProductCatalog.Data.Models;
+using ProductCatalog.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -184,6 +185,22 @@ namespace ProductCatalog.Controllers
 			{
 				return Json("Upload Failed: " + ex.Message);
 			}
+		}
+
+		/// <summary>
+		/// Product Catalog API
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet]
+		[Route("ProductCatalog")]
+		public IEnumerable<ProductDTO> GetProductCatalog()
+		{
+			IEnumerable<Product> productList = _productRepository.GetAll();
+			List<ProductDTO> ProductDTOList = new List<ProductDTO>();
+			foreach (var product in productList) {
+				ProductDTOList.Add(new ProductDTO(product.Id, product.Name, product.Price, product.LastUpdated));
+			}
+			return ProductDTOList;
 		}
 	}
 }
