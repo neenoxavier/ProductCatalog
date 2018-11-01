@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ProductCatalog.Data
 { 
+	/// <summary>
+	/// Product DB Context for Entity Framework
+	/// </summary>
     public class ProductDBContext : DbContext
     {
         public ProductDBContext(DbContextOptions<ProductDBContext> options):base(options)

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace ProductCatalog.ViewModel
 {
+	/// <summary>
+	/// Product DTO for webapi
+	/// </summary>
 	public class ProductDTO
 	{
 		public ProductDTO(int id,string name,decimal price,DateTime lastUpdated)

@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace ProductCatalog.Data.Repository
 {
+	/// <summary>
+	/// Repository for Generic functions
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
     public class Repository<T> : IRepository<T> where T:class
     {
         private ProductDBContext _productDBContext;

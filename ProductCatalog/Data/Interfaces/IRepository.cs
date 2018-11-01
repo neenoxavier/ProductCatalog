@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 
 namespace ProductCatalog.Data.Interfaces
 {
+	/// <summary>
+	/// Repository for generic functions
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
     public interface IRepository<T> where T : class
     {
         IEnumerable<T> Search(Func<T, bool> predicate);
